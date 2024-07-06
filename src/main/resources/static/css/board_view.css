@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+#all {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Background Container Styles */
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1s;
+}
+
+.background-container .current {
+    z-index: 1;
+}
+
+.background-container .next {
+    z-index: 0;
+    opacity: 0;
+}
+
+/* Header Styles */
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+}
+
+#logo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+#logo a {
+    text-decoration: none;
+    color: #8338FF;
+}
+
+/* Board Wrapper Styles */
+.board-wrapper {
+    margin: 40px auto;
+    padding: 40px;
+    width: 70%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #8484841d;
+    border-radius: 24px;
+    box-sizing: border-box;
+    transition: 0.4s;
+    position: relative; /* 자식 요소의 절대 위치를 위해 설정 */
+}
+
+.board-wrapper:hover {
+    background-color: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(5px);
+}
+
+.board-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(132, 132, 132, 0.2); /* 연한 회색 라인 */
+    padding-bottom: 10px;
+}
+
+.board-info h4 {
+    font-size: 24px; /* 제목 글자 크기 */
+    color: #333;
+}
+
+.board-info span {
+    font-size: 16px;
+    color: #555;
+}
+
+.board-content {
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-between; /* 좌우 배치 */
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.board-left, .board-right {
+    width: 48%; /* 좌우 배치를 위해 48%씩 할당 */
+}
+
+.board-attachments {
+    margin-bottom: 20px;
+}
+
+.attached-image {
+    max-width: 100%;
+    max-height: 400px; /* 최대 높이 설정 */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.board-actions {
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    gap: 10px;
+    position: absolute; /* 절대 위치 설정 */
+    bottom: 20px; /* 하단에서의 거리 */
+    right: 40px; /* 우측에서의 거리 */
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #6c757d; /* 통일된 색상 */
+    border-radius: 25px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-secondary {
+    background-color: #adb5bd; /* 더 부드러운 색상 */
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Footer Styles */
+
+#fu {
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 16px;
+    padding-left: 16px;
+    background-color: black;
+}
+
+#fu1 > a{
+    color: white;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin-right: auto;
+    line-height: 20px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#fu1 {
+    margin-right: auto;
+    line-height: 20px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fu2 > a{
+    margin-right: 12px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    line-height: 22px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CelSketch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/header_login.css}">
+    <style>
+        .board-table a {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .board-table a:hover {
+            color: #8338FF;
+        }
+
+        .profilemenu-btn {
+            width: 50px; /* 프로필 사진 크기 조정 */
+            height: 50px; /* 프로필 사진 크기 조정 */
+            border-radius: 50%; /* 원형으로 만들기 */
+        }
+
+        .profilemenu-content img {
+            width: 100px; /* 서브 프로필 사진 크기 조정 */
+            height: 100px; /* 서브 프로필 사진 크기 조정 */
+            border-radius: 50%; /* 원형으로 만들기 */
+        }
+    </style>
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+
+<header>
+    <div class="container">
+        <div id="menu">
+            <img src="/icons/login-openBtn.svg" width="24" height="24" alt="Open Menu" id="openBtn" />
+        </div>
+        <div id="slideMenu">
+            <div class="slide-menu-header">
+                <img src="/icons/login-closeBtn.svg" width="24" height="24" alt="Close Menu" id="closeBtn" />
+                <a href="/board" class="logo">illustration</a>
+            </div>
+            <nav class="slide-menu-nav">
+                <div id="smtitle">홈</div>
+                <a th:href="@{/user/update}" class="menu-item">
+                    <img src="/icons/login-art.svg" width="18" height="18" alt="일러스트" />
+                    <span>일러스트</span>
+                </a>
+                <a th:href="@{/user/logout}" class="menu-item">
+                    <img src="/icons/login-cartoon.svg" width="18" height="18" alt="만화" />
+                    <span>만화</span>
+                </a>
+                <a href="#" class="menu-item" onclick="confirmDeletion(event, '[[$user.userId]]')">
+                    <img src="/icons/login-novel.svg" width="18" height="18" alt="소설" />
+                    <span>소설</span>
+                </a>
+            </nav>
+        </div>
+        <div id="logo">
+            <a th:href="@{/board}">CelSketch</a>
+        </div>
+        <div class="search">
+            <form action="">
+                <img src="/icons/login-search.svg" width="16" height="16" alt="Search" class="search-icon" />
+                <input type="text" name="search" id="sech" placeholder="CelSketch 작품검색">
+            </form>
+        </div>
+        <div class="uploadmenu">
+            <button id="upload" class="uploadmenu-btn">
+                <div id="up1">
+                    업로드
+                    <img src="/icons/login-upload.svg" width="24" height="24" alt="Upload" />
+                </div>
+            </button>
+            <div class="uploadmenu-content">
+                <a th:href="@{/board/write}" class="menu-item">
+                    <img src="/icons/login-art.svg" width="18" height="18" alt="일러스트" />
+                    <span>일러스트</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <img src="/icons/login-cartoon.svg" width="18" height="18" alt="만화" />
+                    <span>만화</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <img src="/icons/login-novel.svg" width="18" height="18" alt="소설" />
+                    <span>소설</span>
+                </a>
+            </div>
+        </div>
+        <div id="mail1">
+            <img src="/icons/login-mail.svg" width="24" height="24" alt="Mail" />
+        </div>
+        <div id="arr2">
+            <img src="/icons/login-arr.svg" width="24" height="24" alt="Arrow" />
+        </div>
+        <div class="profilemenu">
+            <img class="profilemenu-btn" src="" alt="Menu Button" id="profile">
+            <div class="profilemenu-content">
+                <a href="#"><img id="subprofile" alt="프로필"></a><br>
+                <p id="username" th:text="${user.userId}">UserID</p>
+                <input type="hidden" id="userIdx" th:value="${user.uIdx}" />
+                <div>
+                    <a th:href="@{/user/update}" class="profilemenu-link">회원정보 변경</a>
+                    <a th:href="@{/user/logout}" class="profilemenu-link">로그아웃</a>
+                    <a href="#" class="profilemenu-link" onclick="confirmDeletion(event, '${user.userId}')">회원탈퇴</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="board-wrapper">
+        <div class="board-header">
+            <h4>게시판</h4>
+            <a th:href="@{/board/write}" class="btn btn-primary">글 작성</a>
+            <input type="hidden" th:field="${user.userId}">
+        </div>
+
+        <div class="board-container">
+            <form th:action="@{/board/write}" method="post">
+                <input type="hidden" name="userId" id="hiddenUserId" />
+            </form>
+            <div th:if="${boardList != null}">
+                <div th:if="${#lists.isEmpty(boardList)}">
+                    <p class="no-boards-message">등록된 게시물이 없습니다</p>
+                </div>
+                <div th:unless="${#lists.isEmpty(boardList)}" class="board-list">
+                    <table class="board-table">
+                        <thead>
+                        <tr>
+                            <th class="number-column">번호</th>
+                            <th class="title-column">제목</th>
+                            <th class="content-column">내용</th>
+                            <th class="writer-column">작성자</th>
+                            <th class="date-column">작성 날짜</th>
+                            <th class="read-count-column">조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="board, stat : ${boardList}">
+                            <td class="number-column"><a th:href="@{/board/view/{bIdx}(bIdx=${board.bIdx})}" th:text="${stat.index + 1}"></a></td>
+                            <td class="title-column"><a th:href="@{/board/view/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.title}"></a></td>
+                            <td class="content-column" th:text="${board.content}"></td>
+                            <td class="writer-column" th:text="${board.writer}"></td>
+                            <td class="date-column" th:text="${#dates.format(board.updateDate, 'yyyy-MM-dd')}"></td>
+                            <td class="read-count-column" th:text="${board.readCnt}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <a th:href="@{/board(page=0, size=${page.size})}" th:if="${!page.first}" class="prev">처음</a>
+                    <a th:href="@{/board(page=${page.number - 1}, size=${page.size})}" th:if="${page.hasPrevious()}">이전</a>
+                    <span th:each="i : ${#numbers.sequence(1, page.totalPages)}">
+        <a th:href="@{/board(page=${i - 1}, size=${page.size})}" th:text="${i}" th:classappend="${page.number + 1 == i} ? 'active'"></a>
+    </span>
+                    <a th:href="@{/board(page=${page.number + 1}, size=${page.size})}" th:if="${page.hasNext()}">다음</a>
+                    <a th:href="@{/board(page=${page.totalPages - 1}, size=${page.size})}" th:if="${!page.last}" class="next">마지막</a>
+                </div>
+            </div>
+            <div th:if="${boardList == null}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    window.location.href = "[[${@{/index}}]]";
+                    /*]]>*/
+                </script>
+            </div>
+        </div>
+</main>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/background.js}"></script>
+<button id="scrollTopBtn" title="맨 위로 가기">
+    <img th:src="@{/icons/login-scrollTopBtn.svg}" width="24" height="24" alt="Scroll to Top" />
+</button>
+<script th:src="@{/js/scrollup.js}"></script>
+<script th:src="@{/js/slidemenu.js}"></script>
+<script th:src="@{/js/uploadmenu.js}"></script>
+<script th:src="@{/js/profilemenu.js}"></script>
+
+</body>
+</html>

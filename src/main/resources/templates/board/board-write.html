@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.upload_page}">일러스트 업로드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/board_write.css" th:href="@{/css/board_write.css}">
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<main>
+    <div class="container">
+        <div class="board-wrapper">
+            <div class="board-header">
+                <h4 th:text="#{title.upload_page}">일러스트 업로드</h4>
+            </div>
+            <div class="board-container">
+                <form name="frm_writer" method="post" action="/board/write" enctype="multipart/form-data" onsubmit="return validatePage1() && validatePage2();">
+                    <input type="hidden" name="userId" value="userid">
+                    <input type="hidden" name="writer" value="userid">
+
+                    <!-- 페이지 1 -->
+                    <div class="page" id="page1">
+                        <div id="imgfile">
+                            <div id="upload-section">
+                                <div id="input">
+                                    <label for="file-upload">
+                                        <div class="btn-upload">
+                                            <img src="/icons/boardwriter_add_image.svg" alt="Add Image Icon" width="24" height="24">
+                                            <span th:text="#{label.image_add}">이미지 추가</span>
+                                        </div>
+                                    </label>
+                                    <input type="file" name="uploadFile" id="file-upload" multiple accept="image/*" style="display:none;">
+                                </div>
+                                <div id="upload-text" th:text="#{upload.info}">JPEG/GIF/PNG 1장당 32MB 이내, 최대200장 (합계 200MB 까지)까지 업로드 하실 수 있습니다.</div>
+                            </div>
+                        </div>
+
+                        <div id="title">
+                            <input type="text" name="title" id="title-input" th:placeholder="#{placeholder.title}"><br>
+                            <div id="title-error" class="error-message" style="display: none;"></div>
+                            <textarea id="content-input" name="content" th:placeholder="#{placeholder.content}"></textarea>
+                            <div id="content-error" class="error-message" style="display: none;"></div>
+                        </div>
+
+                        <button type="button" id="goToPage2" class="btn" th:text="#{label.next}">다음</button>
+                    </div>
+
+                    <!-- 페이지 2 -->
+                    <div class="page" id="page2" style="display: none;">
+                        <div id="main-section">
+                            <div>
+                                <input type="text" name="tag" id="tag-input" th:placeholder="#{placeholder.tag}">
+                                <div id="tag-error" class="error-message" style="display: none;"></div>
+                            </div>
+
+                            <div id="age-section" class="form-check-inline">
+                                <span th:text="#{label.age_limit}">연령제한</span>
+                                <input type="radio" name="age" value="1"> <span th:text="#{label.all_ages}">전연령</span>
+                                <input type="radio" name="age" value="0"> <span th:text="#{label.r18}">R-18</span>
+                                <div id="age-error" class="error-message" style="display: none;"></div>
+                            </div>
+
+                            <div id="ai-section" class="form-check-inline">
+                                <span th:text="#{label.ai_generated}">AI 생성 작품</span>
+                                <input type="radio" name="ai" value="1"> <span th:text="#{label.yes}">네</span>
+                                <input type="radio" name="ai" value="0"> <span th:text="#{label.no}">아니요</span>
+                                <div id="ai-error" class="error-message" style="display: none;"></div>
+                            </div>
+
+                            <div id="visibility-section" class="form-check-inline">
+                                <span th:text="#{label.visibility}">공개범위</span>
+                                <input type="radio" name="pbc" value="1"> <span th:text="#{label.public}">공개</span>
+                                <input type="radio" name="pbc" value="0"> <span th:text="#{label.private}">비공개</span>
+                                <div id="public-error" class="error-message" style="display: none;"></div>
+                            </div>
+
+                            <div id="original-section" class="form-check-inline">
+                                <span th:text="#{label.original}">오리지널 작품</span>
+                                <input type="radio" name="org" value="1"> <span th:text="#{label.yes}">네</span>
+                                <input type="radio" name="org" value="0"> <span th:text="#{label.no}">아니요</span>
+                                <div id="original-error" class="error-message" style="display: none;"></div>
+                            </div>
+
+                            <div id="notice">
+                                <div th:text="#{prohibited.notice}">아래에 해당하는 작품의 투고를 금지하고 있습니다. 투고를 진행하기 전에 확인해 주세요.</div>
+                                <div style="padding-top: 20px; padding-bottom: 20px;" th:text="#{prohibited.details}">타인의 제작한 작품, 시판되고 있는 상품의 이미지, 제3자가 권리를 소유한 이미지, 게임이나 영상 작품의 캡처, 스크린샷 이미지가 포함되는 작품. 위와 같은 이미지를 유용하여, 처음부터 모든 것을 본인이 직접 그리지 않은 작품 작품 이외의 피사체를 찍은 사진 이미지</div>
+                                <div th:text="#{violation.warning}">이용약관에 위반하는 작품의 투고 유저는 투고 작품 공개 정지, 계정 정지의 대상이 됩니다.</div>
+                                <div>
+                                    <a href="#" th:text="#{terms.of_use}">CelSketch 이용약관</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn" th:text="#{label.upload}">업로드</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#" th:text="#{footer.notice}">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#" th:text="#{footer.terms}">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#" th:text="#{footer.support}">서포트</a>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/scrollup.js"></script>
+<script src="/js/slidemenu.js"></script>
+<script src="/js/uploadmenu.js"></script>
+<script src="/js/profilemenu.js"></script>
+<script src="/js/background.js"></script>
+<script src="/js/validation.js"></script>
+</body>
+</html>

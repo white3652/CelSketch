@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/join.css}">
+    <script type="text/javascript" th:src="@{/js/checkjoin.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pagetrg.js}"></script>
+    <script type="text/javascript" th:src="@{/js/idCheck.js}"></script>
+    <title th:text="#{page.title}">계정 만들기 | CelSketch</title>
+</head>
+<body>
+<div id="background" th:style="'background-image: url(|@{/resources/backimg/default.jpg}|);'"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<header>
+    <a th:href="@{/login}" th:text="#{login.link}" class="login-link">로그인</a>
+</header>
+<section>
+    <form action="/user/join" th:action th:object="${user}" method="post">
+        <div class="form-wrapper">
+            <div class="form-container">
+                <div class="form-header" th:text="#{form.header}">CelSketch</div>
+                <p th:text="#{form.create.account}">계정 만들기</p>
+                <div class="form-slide">
+                    <div id="page1" class="form-page active">
+                        <label class="form-label">
+                            <input type="email" th:placeholder="#{form.email.placeholder}" autocomplete="email" autocapitalize="off"
+                                   class="form-input" th:field="*{email}" id="email">
+                            <div class="emsuccess-message hide" id="emailinfo1" th:text="#{form.email.success}">사용 가능한 이메일 입니다.</div>
+                            <div class="emfailure-message hide" id="emailinfo" th:text="#{form.email.invalid}">이메일 형식이 아닙니다.</div>
+                            <div class="emfailure-message2 hide" id="emailinfo2" th:text="#{form.email.empty}">이메일이 입력되지 않았습니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="text" th:placeholder="#{form.userId.placeholder}" autocomplete="id" autocapitalize="off"
+                                   class="form-input" th:field="*{userId}" id="userId" oninput="checkUserId()">
+                            <div class="success-message hide" id="idinfo1" th:text="#{form.userId.success}">사용할 수 있는 아이디입니다.</div>
+                            <div class="failure-message hide" id="idinfo" th:text="#{form.userId.invalid.length}">아이디는 2~20글자이어야 합니다.</div>
+                            <div class="failure-message2 hide" id="idinfo2" th:text="#{form.userId.invalid.format}">영어로 시작하고 영어 또는 숫자만 가능합니다.</div>
+                            <div class="failure-message3 hide" id="idinfo3" th:text="#{form.userId.empty}">아이디가 입력되지 않았습니다.</div>
+                            <div class="failure-message4 hide" id="idinfo4" th:text="#{form.userId.taken}">아이디가 이미 사용 중입니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="password" th:placeholder="#{form.password.placeholder}" autocomplete="new-password"
+                                   autocapitalize="off" class="form-input" th:field="*{password}" id="password">
+                            <div class="pwfailure-message hide" id="pwinfo" th:text="#{form.password.invalid}">비밀번호는 영문 숫자 특수기호 조합이어야 합니다.</div>
+                            <div class="pwfailure-message2 hide" id="pwinfo2" th:text="#{form.password.empty}">비밀번호가 입력되지 않았습니다.</div>
+                            <div class="pwfailure-message5 hide" id="pwinfo5" th:text="#{form.password.length}">비밀번호는 8~16자리 이어야 합니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="password" th:placeholder="#{form.password.confirm.placeholder}" autocomplete="new-password"
+                                   autocapitalize="off" class="form-input" th:field="*{confirmPw}" id="confirmPw">
+                            <div class="pwsuccess-message hide" id="pwinfo1" th:text="#{form.password.confirm.success}">사용할 수 있는 비밀번호입니다.</div>
+                            <div class="pwfailure-message3 hide" id="pwinfo3" th:text="#{form.password.confirm.mismatch}">비밀번호가 다릅니다.</div>
+                            <div class="pwfailure-message4 hide" id="pwinfo4" th:text="#{form.password.confirm.empty}">비밀번호를 입력해주세요.</div>
+                        </label>
+                        <button type="button" disabled="disabled" class="form-button" id="goToPage2" th:text="#{form.button.next}">다음</button>
+                    </div>
+                    <div id="page2" style="display: none;" class="form-page">
+                        <div>
+                            <label class="form-label">
+                                <input type="text" th:placeholder="#{form.userName.placeholder}" th:field="*{userName}" class="form-input" id="userName">
+                                <div class="nnsuccess-message hide" id="nninfo1" th:text="#{form.userName.success}">사용할 수 있는 닉네임입니다.</div>
+                                <div class="nnfailure-message hide" id="nninfo" th:text="#{form.userName.invalid}">닉네임은 2자 이상 16자 이하, 특수문자 제외 입니다.</div>
+                                <div class="nnfailure-message2 hide" id="nninfo2" th:text="#{form.userName.empty}">닉네임을 입력해주세요.</div>
+                            </label>
+                        </div>
+                        <div class="form-label">
+                            <div class="form-label-title" th:text="#{form.gender.label}">성별</div>
+                            <label><input type="radio" th:field="*{gender}" value="m" th:text="#{form.gender.male}"> 남자</label>
+                            <label><input type="radio" th:field="*{gender}" value="w" th:text="#{form.gender.female}"> 여자</label>
+                            <label><input type="radio" th:field="*{gender}" value="p" checked th:text="#{form.gender.private}"></label>
+                        </div>
+                        <div class="form-label">
+                            <div class="form-label-title" th:text="#{form.birthday.label}">생일</div>
+                            <div class="form-birthday">
+                                <select th:field="*{year}" class="form-select">
+                                    <option th:each="year : ${#numbers.sequence(1900, 2023)}" th:text="${year}" th:value="${year}"></option>
+                                </select>
+                                <select th:field="*{month}" class="form-select">
+                                    <option th:each="month : ${#numbers.sequence(1, 12)}" th:text="${month}" th:value="${month}"></option>
+                                </select>
+                                <select th:field="*{day}" class="form-select">
+                                    <option th:each="day : ${#numbers.sequence(1, 31)}" th:text="${day}" th:value="${day}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="form-label">
+                            <input type="text" th:placeholder="#{form.phone.placeholder}" maxlength="13" th:field="*{phoneNumber}" class="form-input" id="phoneNumber" oninput="autoHyphen(this)">
+                            <div class="error-message" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+                        </label>
+                        <button type="submit" id="submit" disabled="disabled" class="form-button" th:text="#{form.submit}">계정 만들기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<footer>
+    <div class="footer-container">
+        <a href="#" class="footer-link" th:text="#{footer.copy}">@CelSketch</a>
+        <a href="#" class="footer-link" th:text="#{footer.terms}">이용규약</a>
+        <a href="#" class="footer-link" th:text="#{footer.support}">서포트</a>
+    </div>
+</footer>
+<script>
+    document.getElementById('submitForm').addEventListener('click', function () {
+        const form = document.getElementById('joinForm');
+        const formData = new FormData(form);
+
+        fetch('/user/join', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData)),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>

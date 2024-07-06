@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CelSketch</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}" />
+    <link rel="stylesheet" th:href="@{/css/header_login.css}">
+    <link rel="stylesheet" th:href="@{/css/header_null.css}">
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+</div>
+<header>
+    <div class="container">
+        <div id="menu">
+            <div id="arr1">
+                <img th:src="@{/icons/logout-openBtn.svg}" width="24" height="24" alt="Open Menu" />
+            </div>
+        </div>
+        <div id="slideMenu">
+            <div style="display: flex;">
+                <div id="smmenu">
+                    <div id="smmm">
+                        <img th:src="@{/icons/logout-closeBtn.svg}" width="24" height="24" alt="Close Menu" />
+                    </div>
+                </div>
+                <div id="smlogo">
+                    <a th:href="@{/board}">illustration</a>
+                </div>
+            </div>
+            <div id="smtitle">홈</div>
+            <a th:href="@{/user/update}" id="smart">
+                <img th:src="@{/icons/logout-art.svg}" width="18" height="18" alt="일러스트" />
+                <p style="margin-left: 10px;">일러스트</p>
+            </a>
+            <a th:href="@{/user/logout}" id="smcartoon">
+                <img th:src="@{/icons/logout-cartoon.svg}" width="18" height="18" alt="만화" />
+                <p style="margin-left: 10px;">만화</p>
+            </a>
+            <a th:href="@{/user/delete}" id="smnovel">
+                <img th:src="@{/icons/logout-novel.svg}" width="18" height="18" alt="소설" />
+                <p style="margin-left: 10px;">소설</p>
+            </a>
+        </div>
+    </div>
+    <script th:src="@{/js/sliedmenu.js}"></script>
+    <div id="logo">
+        <a th:href="@{/board}">CelSketch</a>
+    </div>
+    <div class="search">
+        <form action="">
+            <input type="text" name="" id="sech" placeholder="CelSketch 작품검색">
+            <img th:src="@{/icons/logout-search.svg}" width="16" height="16" alt="Search" />
+        </form>
+    </div>
+    <div class="uploadmenu">
+        <div id="up">
+            <label>
+                <button id="upload" class="uploadmenu-btn">
+                    <div id="up1">
+                        업로드
+                        <img th:src="@{/icons/logout-upload.svg}" width="24" height="24" alt="Upload" />
+                    </div>
+                </button>
+            </label>
+        </div>
+        <div class="uploadmenu-content">
+            <a th:href="@{/user/update}" id="art">
+                <img th:src="@{/icons/logout-art.svg}" width="18" height="18" alt="일러스트" />
+                <p style="margin-left: 10px;">일러스트</p>
+            </a>
+            <a th:href="@{/user/logout}" id="cartoon">
+                <img th:src="@{/icons/logout-cartoon.svg}" width="18" height="18" alt="만화" />
+                <p style="margin-left: 10px;">만화</p>
+            </a>
+            <a th:href="@{/user/delete}" id="novel">
+                <img th:src="@{/icons/logout-novel.svg}" width="18" height="18" alt="소설" />
+                <p style="margin-left: 10px;">소설</p>
+            </a>
+        </div>
+    </div>
+    <script th:src="@{/js/uploadmenu.js}"></script>
+</header>
+<div id="mem">
+    <div id="acc">
+        <div id="join1">
+            <a th:href="@{/user/join}" id="join">회원가입</a>
+        </div>
+        <div id="login1">
+            <a th:href="@{/user/login}" id="login">로그인</a>
+        </div>
+    </div>
+</div>
+<button id="scrollTopBtn" title="맨 위로 가기">
+    <img th:src="@{/icons/logout-scrollTopBtn.svg}" width="24" height="24" alt="Scroll to Top" />
+</button>
+<script th:src="@{/js/scroliup.js}"></script>
+
+<main>
+    <div class="board-container">
+        <form th:action="@{/board/write}" method="post">
+            <input type="text" th:value="${userDTO.userId}">
+            <input type="hidden" name="userId" th:value="${userDTO.userId}" />
+        </form>
+        <div th:if="${boardList != null}">
+            <div th:if="${#lists.isEmpty(boardList)}">
+                <p class="no-boards-message">등록된 게시물이 없습니다</p>
+            </div>
+            <div th:unless="${#lists.isEmpty(boardList)}" class="board-list">
+                <table class="board-table">
+                    <thead>
+                    <tr>
+                        <th class="number-column">번호</th>
+                        <th class="title-column">제목</th>
+                        <th class="content-column">내용</th>
+                        <th class="writer-column">작성자</th>
+                        <th class="date-column">작성 날짜</th>
+                        <th class="read-count-column">조회수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="board, stat : ${boardList}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td><a th:href="@{/board/view/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.title}"></a></td>
+                        <td th:text="${board.content}"></td>
+                        <td th:text="${board.writer}"></td>
+                        <td th:text="${#dates.format(board.updateDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${board.readCnt}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:if="${boardList == null}">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                window.location.href = "[[${@{/index}}]]";
+                /*]]>*/
+            </script>
+        </div>
+    </div>
+</main>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+<script src="/js/background.js"></script>
+</body>
+</html>

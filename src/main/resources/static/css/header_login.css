@@ -1,0 +1,529 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#all {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Background Container Styles */
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1s;
+}
+
+.background-container .current {
+    z-index: 1;
+}
+
+.background-container .next {
+    z-index: 0;
+    opacity: 0;
+}
+
+/* Header Styles */
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#logo {
+    margin-right: 12%;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: normal;
+    margin-left: 20px;
+    padding-right: 20px;
+}
+
+#logo a {
+    text-decoration: none;
+    color: #8338FF;
+}
+
+/* Search Styles */
+.search {
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    position: relative;
+}
+
+.search img.search-icon {
+    position: absolute;
+    left: 20px; /* Adjust this value to move the icon */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+#sech {
+    width: 600px;
+    height: 40px;
+    padding-left: 50px; /* Adjust padding for the icon */
+    border-radius: 20px;
+    border: 2px solid #848484;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: border-color 0.4s;
+}
+
+#sech:focus {
+    border-color: #E1C4FF;
+    outline: none;
+}
+
+/* Upload Menu Styles */
+.uploadmenu {
+    position: relative;
+}
+
+.uploadmenu-btn {
+    width: 100px;
+    height: 40px;
+    border: 2px solid #848484;
+    color: #848484;
+    border-radius: 20px;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.4s;
+    position: relative;
+}
+
+#up1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.uploadmenu-btn:hover {
+    background-color: #e1c4ff41;
+}
+
+.uploadmenu-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f5f5;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 60px;
+    z-index: 1;
+    width: 132px; /* Adjusted width */
+}
+
+.uploadmenu-content a {
+    color: black;
+    padding: 10px 20px; /* Adjusted padding */
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Center align the content */
+    border-radius: 20px;
+    transition: background-color 0.4s;
+}
+
+.uploadmenu-content a span {
+    margin-left: 10px; /* Adjusted margin for spacing between icon and text */
+}
+
+.uploadmenu-content a:hover {
+    background-color: #E1C4FF;
+}
+
+/* Profile Menu Styles */
+.profilemenu {
+    position: relative;
+    display: inline-block;
+}
+
+.profilemenu-btn {
+    cursor: pointer;
+}
+
+.profilemenu-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f5f5;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 60px;
+    right: 0;
+    z-index: 1;
+    width: 160px; /* Adjusted width */
+}
+
+.profilemenu-content div a {
+    color: black;
+    padding: 10px 20px; /* Adjusted padding */
+    margin: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Center align the content */
+    border-radius: 20px;
+    transition: background-color 0.4s;
+}
+
+.profilemenu-content div a span {
+    margin-left: 10px; /* Adjusted margin for spacing between icon and text */
+}
+
+.profilemenu-content div a:hover {
+    background-color: #E1C4FF;
+}
+
+#subprofile {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 12px;
+    margin-top: 20px;
+    border: 2px solid #8338FF;
+}
+
+#username {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 12px;
+}
+
+#scrollTopBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    display: none;
+}
+
+#slideMenu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 220px;
+    height: 100%;
+    padding: 10px;
+    padding-left: 16px;
+    color: #848484;
+    background-color: #f5f5f5;
+    transition: left 0.3s ease-in-out;
+}
+
+#slideMenu .slide-menu-header {
+    display: flex;
+    align-items: center;
+}
+
+#slideMenu .logo {
+    text-decoration: none;
+    color: #8338FF;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#smtitle {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#slideMenu .menu-item {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    padding-left: 8px;
+    text-decoration: none;
+    color: #848484;
+    border-radius: 20px;
+    transition: background-color 0.4s;
+    margin-top: 10px;
+}
+
+#slideMenu .menu-item span {
+    margin-left: 10px; /* Adjusted margin for spacing between icon and text */
+}
+
+#slideMenu .menu-item:hover {
+    background-color: #E1C4FF;
+}
+
+/* Board Wrapper Styles */
+.board-wrapper {
+    margin: 20px auto; /* Add margin to separate from header */
+    padding: 40px;
+    width: 80%;
+    height: 800px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #8484841d;
+    border-radius: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.board-wrapper:hover {
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.board-container {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 15px; /* Added border radius */
+    overflow: hidden; /* Added overflow to apply border radius */
+}
+
+.board-table th, .board-table td {
+    border: 1px solid #ddd;
+    padding: 12px; /* Adjusted padding */
+    text-align: center;
+    transition: background-color 0.3s; /* Added transition for hover effect */
+}
+
+.board-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.board-table th.number-column,
+.board-table th.date-column,
+.board-table th.read-count-column,
+.board-table td.number-column,
+.board-table td.date-column,
+.board-table td.read-count-column {
+    width: 10%;
+}
+
+.board-table th.title-column,
+.board-table th.content-column,
+.board-table td.title-column,
+.board-table td.content-column {
+    width: 35%;
+}
+
+.board-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.no-boards-message {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    padding: 20px;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagination a, .pagination span {
+    color: #333;
+    padding: 4px 8px; /* Adjusted padding */
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0 2px; /* Adjusted margin */
+    border-radius: 5px;
+    font-size: 12px; /* Adjusted font size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination a:hover:not(.active), .pagination span:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination a.active {
+    background-color: #8338FF;
+    color: white;
+    border: 1px solid #8338FF;
+}
+
+/* Add icons for previous and next buttons */
+.pagination .prev, .pagination .next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .prev::before, .pagination .next::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
+}
+
+.pagination .prev::before {
+    transform: rotate(-135deg);
+    margin-right: 8px;
+}
+
+.pagination .next::after {
+    transform: rotate(45deg);
+    margin-left: 8px;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #8338FF;
+    border-radius: 25px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #6a29d7;
+}
+
+/* Footer Styles */
+
+#fu {
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 16px;
+    padding-left: 16px;
+    background-color: black;
+}
+
+#fu1 > a{
+    color: white;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin-right: auto;
+    line-height: 20px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#fu1 {
+    margin-right: auto;
+    line-height: 20px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fu2 > a{
+    margin-right: 12px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    line-height: 22px;
+    display: flow-root;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#mail1, #arr2, .profilemenu {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.profilemenu, .uploadmenu {
+    position: relative;
+    display: inline-block;
+}
+
+#profile {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    background-size: cover;
+}
+
+#update, #logout, #delete {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.2s;
+    padding-left: 12px;
+    align-items: center;
+}

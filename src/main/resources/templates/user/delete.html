@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>계정삭제 | CelSketch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/resources/css/delete.css}" />
+  <!-- jQuery 추가 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#deleteAccountButton').click(function(event) {
+        event.preventDefault();
+        if (confirm("정말로 탈퇴하시겠습니까?")) {
+          $.post("/user/delete", { userId: '${user.user_id}' })
+                  .done(function() {
+                    window.location.href = "/user/logout";
+                  })
+                  .fail(function() {
+                    alert("계정 삭제가 실패했습니다.");
+                  });
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<div id="wrap">
+  <div id="container">
+    <div id="logo"></div>
+    <button id="deleteAccountButton">계정 삭제</button>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/update.css}">
+    <title>개인정보수정 | CelSketch</title>
+</head>
+<body>
+<div id="background" th:style="'background-image: url(|@{/resources/imagefile/default.jpg}|);'"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<header>
+    <a th:href="@{/login}" class="login-link">로그인</a>
+</header>
+<section>
+    <form action="/user/update" th:action th:object="${user}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="form-wrapper">
+            <div class="form-container">
+                <div class="form-header">CelSketch</div>
+                <p>개인정보수정</p>
+                <div class="form-slide">
+                    <div id="page1" class="form-page active">
+                        <label class="form-label">
+                            <input type="text" placeholder="아이디" autocomplete="id" autocapitalize="off"
+                                   class="form-input" th:field="*{userId}" id="userId" readonly>
+                        </label>
+                        <input type="hidden" th:field="*{userName}">
+
+                        <label class="form-label">
+                            <input type="email" placeholder="메일주소" autocomplete="email" autocapitalize="off"
+                                   class="form-input" th:field="*{email}" id="email">
+                            <div class="error hide" id="emailinfo">이메일 형식이 아닙니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="password" placeholder="비밀번호" autocomplete="new-password"
+                                   autocapitalize="off" class="form-input" th:field="*{password}" id="password">
+                            <div class="error hide" id="pwinfo">비밀번호는 영문 숫자 특수기호 조합이어야 합니다.</div>
+                            <div class="error hide" id="pwinfo2">비밀번호가 입력되지 않았습니다.</div>
+                            <div class="error hide" id="pwinfo5">비밀번호는 8~16자리 이어야 합니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="password" placeholder="비밀번호 확인" autocomplete="new-password"
+                                   autocapitalize="off" class="form-input" th:field="*{confirmPw}" id="confirmPw">
+                            <div class="error hide" id="pwinfo3">비밀번호가 다릅니다.</div>
+                        </label>
+                        <label class="form-label">
+                            <input type="file" th:field="*{profile}" name="profile" placeholder="프로필사진">
+                        </label>
+                        <button type="submit" class="form-button" id="submit">변경하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/user-update.js}"></script>
+</body>
+</html>

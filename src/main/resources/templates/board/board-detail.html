@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/detail.css}" />
+    <title>게시판 상세보기 - CelSketch</title>
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<header>
+    <div th:if="${user != null}">
+        <div th:replace="~{common/header-logged-in :: header-logged-in}"></div>
+    </div>
+    <div th:if="${user == null}">
+        <div th:replace="~{common/header-logged-out :: header-logged-out}"></div>
+    </div>
+</header>
+<main>
+    <div class="board-detail-container">
+        <h2 th:text="${board.title}">게시글 제목</h2>
+        <p>작성자: <span th:text="${userName}">작성자명</span></p>
+        <p>작성일: <span th:text="${#dates.format(board.updateDate, 'yyyy-MM-dd')}">작성일</span></p>
+        <div class="board-content" th:utext="${board.content}">
+            게시글 내용
+        </div>
+        <div class="board-buttons">
+            <a th:href="@{/board/update/{id}(id=${board.u_idx})}" class="button">수정</a>
+            <a th:href="@{/board/delete/{id}(id=${board.u_idx})}" class="button">삭제</a>
+            <a th:href="@{/board}" class="button">목록</a>
+        </div>
+    </div>
+</main>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

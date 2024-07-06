@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.celsketch.mapper.BoardMapper">
+    <select id="getBoardList" resultType="com.celsketch.dto.BoardDTO">
+        SELECT b_idx as bIdx, user_id as userId, writer, title, content, originfile_name as originFileName, savefile_name as saveFileName, tag, age, org as org, ai as ai, pbc as pbc, read_cnt as readCnt, post_date as postDate, update_date as updateDate, del_or_not as delOrNot
+        FROM tb_board
+        WHERE del_or_not = 0
+    </select>
+
+    <select id="getBoardListPaged" resultType="com.celsketch.dto.BoardDTO">
+        SELECT b_idx as bIdx, user_id as userId, writer, title, content, originfile_name as originFileName, savefile_name as saveFileName, tag, age, org as org, ai as ai, pbc as pbc, read_cnt as readCnt, post_date as postDate, update_date as updateDate, del_or_not as delOrNot
+        FROM tb_board
+        WHERE del_or_not = 0
+        ORDER BY post_date DESC
+    </select>
+
+    <select id="getBoard" parameterType="int" resultType="com.celsketch.dto.BoardDTO">
+        SELECT b_idx as bIdx, user_id as userId, writer, title, content, originfile_name as originFileName, savefile_name as saveFileName, tag, age, org as org, ai as ai, pbc as pbc, read_cnt as readCnt, post_date as postDate, update_date as updateDate, del_or_not as delOrNot
+        FROM tb_board
+        WHERE b_idx = #{bIdx} AND del_or_not = 0
+    </select>
+
+    <insert id="insertBoard" parameterType="com.celsketch.dto.BoardDTO">
+        INSERT INTO tb_board (user_id, writer, title, content, tag, age, ai, pbc, org, originfile_name, savefile_name)
+        VALUES (#{userId}, #{writer}, #{title}, #{content}, #{tag}, #{age}, #{ai}, #{pbc}, #{org}, #{originFileName}, #{saveFileName})
+    </insert>
+
+    <update id="updateBoard" parameterType="com.celsketch.dto.BoardDTO">
+        UPDATE tb_board
+        SET title = #{title}, content = #{content}, originfile_name = #{originFileName}, savefile_name = #{saveFileName}, tag = #{tag}, age = #{age}, org = #{org}, ai = #{ai}, pbc = #{pbc}, update_date = NOW()
+        WHERE b_idx = #{bIdx} AND user_id = #{userId}
+    </update>
+
+    <update id="deleteBoard" parameterType="int">
+        UPDATE tb_board
+        SET del_or_not = 1
+        WHERE b_idx = #{bIdx}
+    </update>
+
+    <select id="getBoardById" parameterType="int" resultType="com.celsketch.dto.BoardDTO">
+        SELECT b_idx as bIdx,
+               user_id as userId,
+               writer,
+               title,
+               content,
+               originfile_name as originFileName,
+               savefile_name as saveFileName,
+               tag,
+               age,
+               org,
+               ai,
+               pbc,
+               read_cnt as readCnt,
+               post_date as postDate,
+               update_date as updateDate,
+               del_or_not as delOrNot
+        FROM tb_board
+        WHERE b_idx = #{id} AND del_or_not = 0
+    </select>
+
+    <update id="incrementReadCnt" parameterType="int">
+        UPDATE tb_board
+        SET read_cnt = read_cnt + 1
+        WHERE b_idx = #{bIdx}
+    </update>
+
+    <select id="countBoards" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_board
+        WHERE del_or_not = 0
+    </select>
+</mapper>

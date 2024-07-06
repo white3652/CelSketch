@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+    <title>CelSketch</title>
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<header>
+    <div id="logo">
+        <a th:href="@{/}">CelSketch</a>
+    </div>
+    <form>
+        <div class="search_form">
+            <input class="search-bar_input" type="search" placeholder="검색" />
+            <svg id="search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <g clip-path="url(#clip0_93_2046)">
+                    <path d="M15.0242 14.1758L11.4428 10.5944C12.4187 9.40072 12.8986 7.87762 12.7831 6.3401C12.6676 4.80259 11.9655 3.36829 10.8221 2.33388C9.67874 1.29947 8.18152 0.744102 6.64015 0.782641C5.09878 0.82118 3.63119 1.45068 2.54093 2.54093C1.45068 3.63119 0.82118 5.09878 0.782641 6.64015C0.744102 8.18152 1.29947 9.67874 2.33388 10.8221C3.36829 11.9655 4.80259 12.6676 6.3401 12.7831C7.87762 12.8986 9.40072 12.4187 10.5944 11.4428L14.1758 15.0242C14.2889 15.1335 14.4405 15.1939 14.5978 15.1926C14.7551 15.1912 14.9056 15.1281 15.0169 15.0169C15.1281 14.9056 15.1912 14.7551 15.1926 14.5978C15.1939 14.4405 15.1335 14.2889 15.0242 14.1758ZM6.79997 11.6C5.85062 11.6 4.92259 11.3185 4.13323 10.791C3.34387 10.2636 2.72865 9.51393 2.36534 8.63685C2.00204 7.75976 1.90699 6.79464 2.0922 5.86353C2.27741 4.93242 2.73456 4.07715 3.40585 3.40585C4.07715 2.73456 4.93242 2.27741 5.86353 2.0922C6.79464 1.90699 7.75976 2.00204 8.63685 2.36534C9.51393 2.72865 10.2636 3.34387 10.791 4.13323C11.3185 4.92259 11.6 5.85062 11.6 6.79997C11.5985 8.07257 11.0924 9.29264 10.1925 10.1925C9.29264 11.0924 8.07257 11.5985 6.79997 11.6Z" fill="#848484"/>
+                </g>
+                <defs>
+                    <clipPath id="clip0_93_2046">
+                        <rect width="14" height="14" fill="white" transform="translate(0.800049 0.799988)"/>
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+    </form>
+</header>
+<section>
+    <div id="main">
+        <div id="slogo">
+            CelSketch
+        </div>
+        <div id="join">
+            <a th:href="@{/user/join}" id="join_a">계정 만들기</a>
+        </div>
+        <div id="login">
+            <a th:href="@{/user/login}" id="login_a">로그인</a>
+        </div>
+    </div>
+</section>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

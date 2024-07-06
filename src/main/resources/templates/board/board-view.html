@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${board.title}">게시글 보기</title>
+    <link rel="stylesheet" th:href="@{/css/board_view.css}">
+</head>
+<body>
+<div id="all" th:style="|background-image: url('@{/imagefile/default.jpg}');|"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+    <script th:src="@{/js/background.js}"></script>
+</div>
+<main>
+    <div class="board-wrapper">
+        <div class="board-header">
+            <h4 th:text="${board.title}">제목</h4>
+        </div>
+        <div class="board-container">
+            <div class="board-info">
+                <span><strong>작성자:</strong> <span th:text="${board.writer}">작성자</span></span>
+                <span><strong>조회수:</strong> <span th:text="${board.readCnt}">조회수</span></span>
+            </div>
+            <div class="board-content">
+                <div class="board-left">
+                    <h5>첨부 이미지</h5>
+                    <img th:src="@{/api/files/{saveFileName}(saveFileName=${board.saveFileName})}" alt="첨부 이미지" class="attached-image">
+                </div>
+                <div class="board-right">
+                    <h5>내용</h5>
+                    <p th:text="${board.content}">내용</p>
+                </div>
+            </div>
+            <div class="board-actions" th:if="${user.userId == board.userId}">
+                <a th:href="@{/board/update/{bIdx}(bIdx=${board.bIdx})}" class="btn btn-secondary">수정</a>
+                <button type="button" class="btn btn-secondary" id="delete-button" th:data-bidx="${board.bIdx}">삭제</button>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            <a href="#">@CelSketch</a>
+        </div>
+        <div class="fu2">
+            <a href="#">이용규약</a>
+        </div>
+        <div class="fu2">
+            <a href="#">서포트</a>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/background.js}"></script>
+<script th:src="@{/js/scrollup.js}"></script>
+<script th:src="@{/js/slidemenu.js}"></script>
+<script th:src="@{/js/uploadmenu.js}"></script>
+<script th:src="@{/js/profilemenu.js}"></script>
+<script th:src="@{/js/board-delete.js}"></script>
+</body>
+</html>

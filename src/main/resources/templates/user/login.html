@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script th:src="@{/js/background.js}"></script> <!-- 스크립트 태그 위치 이동 -->
+    <title>로그인 | CelSketch</title>
+</head>
+<body>
+<div id="all" th:style="'background-image: url(|@{/resources/imagefile/default.jpg}|);'"></div>
+<div class="background-container">
+    <img class="background-image current" src="" alt="이미지">
+    <img class="background-image next" src="" alt="이미지">
+</div>
+<a th:href="@{/user/join}" class="log">계정 만들기</a>
+<div id="wrap">
+    <div id="main">
+        <div id="log">CelSketch</div>
+        <p>창작 활동을 더욱 즐겁게</p>
+        <div id="slide">
+            <form th:action th:object="${user}" method="post"> <!-- th:object 수정 -->
+                <div id="page1">
+                    <label class="email">
+                        <input type="text" placeholder="CelSketch ID" autocomplete="email"
+                               autocapitalize="off" th:field="*{userId}" class="emailid" style="padding-right: 8px;">
+                    </label>
+                    <label class="pwi">
+                        <input type="password" placeholder="비밀번호" autocomplete="new-password" autocapitalize="off"
+                               th:field="*{password}" class="pw" style="padding-right: 36px;">
+                    </label>
+                    <label>
+                        <input type="submit" class="bou" style="height: 40px;" value="로그인"> <!-- 스타일 속성 수정 -->
+                    </label>
+                    <div th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="error-message"></div>
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+                    <div th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="fu">
+        <div id="fu1">
+            @CelSketch
+        </div>
+        <div class="fu2">
+            이용규약
+        </div>
+        <div class="fu2">
+            서포트
+        </div>
+    </div>
+</footer>
+</body>
+</html>
